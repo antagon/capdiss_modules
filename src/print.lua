@@ -43,6 +43,10 @@ local function tcp_flgs2str (packet)
 	return str
 end
 
+local function conv_timestamp (ts)
+	return ("%s.%06d"):format (os.date ("%H:%M:%S", ts), (ts % 1) * 1000000)
+end
+
 local hooks = {
 	-- Trigger for each input file...
 	["@"] = function (filename, linktype)
@@ -52,7 +56,7 @@ local hooks = {
 	ip = function (packet, ts, num)
 		io.write (("%06d %s %4s %s -> %s\n"):format (
 					num,
-					os.date ("%H:%M:%S", ts),
+					conv_timestamp (ts),
 					packet:type ():upper (),
 					packet:get_saddr ():color ("brgreen", nil, true),
 					packet:get_daddr ():color ("brgreen", nil, true)))
@@ -61,7 +65,7 @@ local hooks = {
 	ipv6 = function (packet, ts, num)
 		io.write (("%06d %s %4s %s -> %s\n"):format (
 					num,
-					os.date ("%H:%M:%S", ts),
+					conv_timestamp (ts),
 					packet:type ():upper (),
 					packet:get_saddr ():color ("brgreen", nil, true),
 					packet:get_daddr ():color ("brgreen", nil, true)))
@@ -74,7 +78,7 @@ local hooks = {
 		if packet:get_type () == packet.types.ICMP_ECHO or packet:get_type () == packet.types.ICMP_ECHOREPLY then
 			line = ("%06d %s %4s %s (%d), id %d, seq %d"):format (
 						num,
-						os.date ("%H:%M:%S", ts),
+						conv_timestamp (ts),
 						packet:type ():upper (),
 						packet:get_type_str (),
 						packet:get_type (),
@@ -84,7 +88,7 @@ local hooks = {
 		else
 			line = ("%06d %s %4s %s (%d)"):format (
 						num,
-						os.date ("%H:%M:%S", ts),
+						conv_timestamp (ts),
 						packet:type ():upper (),
 						"AAA",
 						packet:get_type ()
@@ -97,7 +101,7 @@ local hooks = {
 	tcp = function (packet, ts, num)
 		io.write (("%06d %s %4s %s -> %s: Flags [%s], seq %d, ack %d, win %d, options [%s], length %d\n"):format (
 					num,
-					os.date ("%H:%M:%S", ts),
+					conv_timestamp (ts),
 					packet:type ():upper (),
 					tostring (packet:get_srcport ()):color ("brcyan", nil),
 					tostring (packet:get_dstport ()):color ("brcyan", nil),
@@ -113,7 +117,7 @@ local hooks = {
 	udp = function (packet, ts, num)
 		io.write (("%06d %s %4s %s -> %s: length %d\n"):format (
 					num,
-					os.date ("%H:%M:%S", ts),
+					conv_timestamp (ts),
 					packet:type ():upper (),
 					tostring (packet:get_srcport ()):color ("brcyan", nil),
 					tostring (packet:get_dstport ()):color ("brcyan", nil),
