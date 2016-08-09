@@ -50,21 +50,57 @@ local hooks = {
 	end,
 
 	ip = function (packet, ts, num)
-		io.write (("%s %s %s -> %s\n"):format (
+		io.write (("%06d %s %4s %s -> %s\n"):format (
+					num,
 					os.date ("%H:%M:%S", ts),
 					packet:type ():upper (),
 					packet:get_saddr ():color ("brgreen", nil, true),
 					packet:get_daddr ():color ("brgreen", nil, true)))
 	end,
 
-	tcp = function (packet, ts, num)
-		local flgs = tcp_flgs2str
-
-		io.write (("%s %s %s -> %s: Flags [%s], seq %d, ack %d, win %d, options [%s], length %d\n"):format (
+	ipv6 = function (packet, ts, num)
+		io.write (("%06d %s %4s %s -> %s\n"):format (
+					num,
 					os.date ("%H:%M:%S", ts),
 					packet:type ():upper (),
-					tostring (packet:get_srcport ()):color ("bryellow", nil),
-					tostring (packet:get_dstport ()):color ("bryellow", nil),
+					packet:get_saddr ():color ("brgreen", nil, true),
+					packet:get_daddr ():color ("brgreen", nil, true)))
+	end,
+
+	icmp = function (packet, ts, num)
+		local line
+
+		-- ICMP ECHO Request/Response
+		if packet:get_type () == packet.types.ICMP_ECHO or packet:get_type () == packet.types.ICMP_ECHOREPLY then
+			line = ("%06d %s %4s %s (%d), id %d, seq %d"):format (
+						num,
+						os.date ("%H:%M:%S", ts),
+						packet:type ():upper (),
+						packet:get_type_str (),
+						packet:get_type (),
+						packet:get_id (),
+						packet:get_seqnum ()
+			)
+		else
+			line = ("%06d %s %4s %s (%d)"):format (
+						num,
+						os.date ("%H:%M:%S", ts),
+						packet:type ():upper (),
+						"AAA",
+						packet:get_type ()
+			)
+		end
+
+		io.write (line .. "\n")
+	end,
+
+	tcp = function (packet, ts, num)
+		io.write (("%06d %s %4s %s -> %s: Flags [%s], seq %d, ack %d, win %d, options [%s], length %d\n"):format (
+					num,
+					os.date ("%H:%M:%S", ts),
+					packet:type ():upper (),
+					tostring (packet:get_srcport ()):color ("brcyan", nil),
+					tostring (packet:get_dstport ()):color ("brcyan", nil),
 					tcp_flgs2str (packet),
 					packet:get_seqnum (),
 					packet:get_acknum (),
@@ -74,31 +110,25 @@ local hooks = {
 					))
 	end,
 
-	--[[ipv6 = function (packet, ts, num)
-		print (("%s %s %s > %s"):format (
-				os.date ("%H:%M:%S", ts),
-				packet:type ():upper (),
-				packet:get_saddr ():color ("brgreen", nil, true),
-				packet:get_daddr ():color ("brgreen", nil, true)))
-	end,
-
 	udp = function (packet, ts, num)
-		print (("%s %s %s > %s"):format (
-				os.date ("%H:%M:%S", ts),
-				packet:type ():upper (),
-				packet:get_srcport (),
-				packet:get_dstport ()))
-	end,]]
-
-	-- A signal handler...
-	sigaction = function (signo)
-		print ("Ooops... signal delivered...")
+		io.write (("%06d %s %4s %s -> %s: length %d\n"):format (
+					num,
+					os.date ("%H:%M:%S", ts),
+					packet:type ():upper (),
+					tostring (packet:get_srcport ()):color ("brcyan", nil),
+					tostring (packet:get_dstport ()):color ("brcyan", nil),
+					packet:get_datalen ()
+					))
 	end
 }
 
 if not app:set_hooks (hooks) then
 	error (app:get_error ())
 end
+
+app:set_sigaction (function ()
+	print ("Signal caught.")
+end)
 
 return app:run ()
 
