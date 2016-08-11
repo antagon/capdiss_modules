@@ -17,19 +17,17 @@ fd:close ()
 local manifest = require (ifile)
 
 io.write (([[
-name: %s
-license: %s
-version: %s
-author: %s
-description: %s
-usage: %s
+Name: %s
+Version: %s
+Author: %s
+License: %s
+Description: %s
 ]]):format (
 	manifest.name or "not-specified",
 	manifest.license or "not-specified",
 	manifest.version or "not-specified",
 	manifest.author or "not-specified",
-	manifest.description or "not-specified",
-	manifest.usage or "not-specified"
+	manifest.description or "not-specified"
 ))
 
 return modinfo
