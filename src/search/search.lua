@@ -1,4 +1,4 @@
-require ("getopt")
+require ("coroner.getopt")
 local search = {}
 
 local search_opt = ""

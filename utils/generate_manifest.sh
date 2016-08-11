@@ -5,8 +5,7 @@ OUTFILE="manifest.lua"
 echo "return {" > "$OUTFILE"
 
 find . -type f -name "*-manifest.lua" | while read manifest; do
-	modname="$(echo $manifest | cut -d '-' -f 1)"
-	echo -e "\t[\"$(basename $modname)\"] = \"$(basename $manifest)\"," >> "$OUTFILE"
+	echo -e "\t[\"$(basename "$manifest" "-manifest.lua")\"] = \"$manifest\"," >> "$OUTFILE"
 done
 
 echo "}" >> "$OUTFILE"
