@@ -1,5 +1,4 @@
 require ("getopt")
-require ("coroner")
 local search = {}
 
 local search_opt = ""
