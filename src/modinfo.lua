@@ -20,9 +20,9 @@ License: %s
 Description: %s
 ]]):format (
 	mod_manifest.name or "not-specified",
-	mod_manifest.license or "not-specified",
 	mod_manifest.version or "not-specified",
 	mod_manifest.author or "not-specified",
+	mod_manifest.license or "not-specified",
 	mod_manifest.description or "not-specified"
 ))
 
