@@ -25,7 +25,7 @@ end
 local manifest = require ("manifest")
 
 for _, mod_manifest in pairs (manifest) do
-	local mod = dofile (mod_manifest)
+	local mod = require (mod_manifest)
 	local field = ""
 
 	for i = 1, #search_opt do

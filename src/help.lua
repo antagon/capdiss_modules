@@ -10,7 +10,7 @@ if not manifest[arg[1]] then
 	error (("Module '%s' not found."):format (arg[1]))
 end
 
-local mod_manifest = dofile (manifest[arg[1]])
+local mod_manifest = require (manifest[arg[1]])
 
 if not mod_manifest.usage then
 	error ("No usage information available for this module.")
