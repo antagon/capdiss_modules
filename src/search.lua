@@ -39,9 +39,7 @@ for _, mod_manifest in pairs (manifest) do
 			field = mod.license
 		end
 
-		local match_beg, match_end = string.find (field:lower (), match_string:lower ())
-
-		if match_beg then
+		if string.match (field:lower (), match_string:lower ()) then
 			io.write (("%s - %s\n"):format (mod.name, mod.description))
 			break
 		end
