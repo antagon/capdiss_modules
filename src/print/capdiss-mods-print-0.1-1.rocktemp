@@ -1,0 +1,39 @@
+package = "capdiss-mods-print"
+version = "1.0-1"
+
+source = {
+	url = "https://codeward.org/software/capdiss/files/modules/",
+	file = package .. "-" .. version .. ".tar.gz",
+	md5 = "@MD5_SUM@",
+	dir = package .. "-" .. version
+}
+
+description = {
+	summary = "Pretty-print packets.",
+	homepage = "https://codeward.org/software/capdiss/",
+	maintainer = "antagon <antagon@codeward.org>",
+	license = "GPLv2"
+}
+
+dependencies = {
+	"lua >= 5.2",
+	"coroner >= 0.1"
+}
+
+build = {
+	type = "builtin",
+	modules = {
+		["print"] = "src/print.lua",
+		["print-manifest"] = "src/print-manifest.lua",
+		["print.format"] = "src/print/format.lua",
+		["print.print_eth"] = "src/print/print_eth.lua",
+		["print.print_http"] = "src/print/print_http.lua",
+		["print.print_icmp"] = "src/print/print_icmp.lua",
+		["print.print_ip"] = "src/print/print_ip.lua",
+		["print.print_ipv6"] = "src/print/print_ipv6.lua",
+		["print.print_tcp"] = "src/print/print_tcp.lua",
+		["print.print_udp"] = "src/print/print_udp.lua",
+		["print.print_unknown"] = "src/print/print_unknown.lua"
+	}
+}
+
