@@ -1,10 +1,22 @@
-.PHONY: all generate_manifest clean
+include ../Makefile.defs
 
-all: generate_manifest
+PACKAGES = core\
+			print
 
-generate_manifest:
-	../utils/generate_manifest.sh
+.PHONY: packages $(PACKAGES)
+
+all:
+	@echo "Run \`make packages\` or \`make clean\`"	
+
+packages: $(PACKAGES)
+
+core:
+	@$(MAKE_PKG) $@
+
+print:
+	@$(MAKE_PKG) $@
 
 clean:
-	rm -f manifest.lua
+	rm -f *.tar.gz
+	rm -f *.rockspec
 
