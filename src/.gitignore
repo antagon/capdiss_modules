@@ -1,1 +1,2 @@
-manifest.lua
+*.rockspec
+*.tar.gz
