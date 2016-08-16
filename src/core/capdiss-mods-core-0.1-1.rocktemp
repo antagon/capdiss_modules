@@ -1,0 +1,35 @@
+package = "capdiss-mods-core"
+version = "0.1-1"
+
+source = {
+	url = "https://codeward.org/software/capdiss/files/modules/",
+	file = package .. "-" .. version .. ".tar.gz",
+	md5 = "@MD5_SUM@",
+	dir = package .. "-" .. version
+}
+
+description = {
+	summary = "Core modules for capdiss.",
+	homepage = "https://codeward.org/software/capdiss/",
+	maintainer = "antagon <antagon@codeward.org>",
+	license = "GPLv2"
+}
+
+dependencies = {
+	"lua >= 5.2"
+}
+
+build = {
+	type = "builtin",
+	modules = {
+		["help"] = "src/help.lua",
+		["help-manifest"] = "src/help-manifest.lua",
+		["modinfo"] = "src/modinfo.lua",
+		["modinfo-manifest"] = "src/modinfo-manifest.lua",
+		["modlist"] = "src/modlist.lua",
+		["modlist-manifest"] = "src/modlist-manifest.lua",
+		["search"] = "src/search.lua",
+		["search-manifest"] = "src/search-manifest.lua"
+	}
+}
+
