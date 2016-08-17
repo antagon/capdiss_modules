@@ -1,5 +1,12 @@
 #!/bin/bash
 
+function cleanup ()
+{
+	unlink "$SYMLINK"
+}
+
+trap cleanup EXIT
+
 if [ $# -lt 1 ]; then
 	echo "Usage: $0 <input-dir>"
 	exit 1
@@ -19,9 +26,19 @@ if [ ! -f "$ROCKTEMP" ]; then
 	exit 1
 fi
 
+# Create a symbolic link to input directory.
+SYMLINK="$(basename "$ROCKTEMP" ".rocktemp")"
+
+ln -s "$IDIR" "$SYMLINK"
+
+if [ $? -ne 0 ]; then
+	echo "$0: tarball creation failed (cannot create a symlink)."
+	exit 1
+fi
+
 TARBALL="$(basename "$ROCKTEMP" ".rocktemp").tar.gz"
 
-tar czf "$TARBALL" "$IDIR/"
+tar chzf "$TARBALL" "$SYMLINK/"
 
 if [ $? -ne 0 ]; then
 	echo "$0: tarball creation failed."
