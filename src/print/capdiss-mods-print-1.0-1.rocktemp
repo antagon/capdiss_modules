@@ -2,8 +2,7 @@ package = "capdiss-mods-print"
 version = "1.0-1"
 
 source = {
-	url = "https://codeward.org/software/capdiss/files/modules/",
-	file = package .. "-" .. version .. ".tar.gz",
+	url = "https://codeward.org/software/capdiss/files/modules/" .. package .. "-" .. version .. ".tar.gz",
 	md5 = "@MD5_SUM@",
 	dir = package .. "-" .. version
 }
