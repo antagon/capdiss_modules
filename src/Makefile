@@ -1,8 +1,10 @@
 MAKE_PKG = ../utils/make_pkg.sh
 MAKE_MD5SUMS = ../utils/make_md5sums.sh
 
-PACKAGES = core\
+PACKAGES = meta \
+			core \
 			print
+
 
 .PHONY: all clean md5sums sign packages $(PACKAGES)
 
@@ -15,6 +17,9 @@ core:
 	@$(MAKE_PKG) $@
 
 print:
+	@$(MAKE_PKG) $@
+
+meta:
 	@$(MAKE_PKG) $@
 
 md5sums:
