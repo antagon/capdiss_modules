@@ -1,0 +1,30 @@
+package = "capdiss-mods-meta"
+-- The version should always copy the 'core' utils.
+version = "1.0-1"
+
+source = {
+	url = "https://codeward.org/software/capdiss/files/modules/" .. package .. "-" .. version .. ".tar.gz",
+	md5 = "@MD5_SUM@",
+	dir = package .. "-" .. version
+}
+
+description = {
+	summary = "Meta-module to download all modules for capdiss.",
+	homepage = "https://codeward.org/software/capdiss/",
+	maintainer = "antagon <antagon@codeward.org>",
+	license = "GPLv2"
+}
+
+dependencies = {
+	"lua >= 5.2",
+	"capdiss-mods-core >= 1.0",
+	"capdiss-mods-print >= 1.0"
+}
+
+build = {
+	type = "builtin",
+	modules = {
+		["metafortune"] = "src/metafortune.lua"
+	}
+}
+
