@@ -15,20 +15,22 @@ description = {
 }
 
 dependencies = {
-	"lua >= 5.2"
+	"lua >= 5.2",
+	"luafilesystem >= 1.6.0"
 }
 
 build = {
 	type = "builtin",
 	modules = {
+		["manifest.help"] = "manifest/help.lua",
+		["manifest.modinfo"] = "manifest/modinfo.lua",
+		["manifest.modlist"] = "manifest/modlist.lua",
+		["manifest.search"] = "manifest/search.lua",
+		["manifest"] = "src/manifest.lua",
 		["help"] = "src/help.lua",
-		["help-manifest"] = "src/help-manifest.lua",
 		["modinfo"] = "src/modinfo.lua",
-		["modinfo-manifest"] = "src/modinfo-manifest.lua",
 		["modlist"] = "src/modlist.lua",
-		["modlist-manifest"] = "src/modlist-manifest.lua",
-		["search"] = "src/search.lua",
-		["search-manifest"] = "src/search-manifest.lua"
+		["search"] = "src/search.lua"
 	}
 }
 
