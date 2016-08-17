@@ -14,16 +14,16 @@ all:
 packages: $(PACKAGES) md5sums
 
 core:
-	@$(MAKE_PKG) $@
+	$(MAKE_PKG) $@
 
 print:
-	@$(MAKE_PKG) $@
+	$(MAKE_PKG) $@
 
 meta:
-	@$(MAKE_PKG) $@
+	$(MAKE_PKG) $@
 
 md5sums:
-	@$(MAKE_MD5SUMS) ./
+	$(MAKE_MD5SUMS) ./
 
 sign:
 	@gpg2 --detach-sign -u 484D301C MD5SUMS
