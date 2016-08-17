@@ -6,11 +6,9 @@ end
 
 local manifest = require ("manifest")
 
-if not manifest[arg[1]] then
+if not manifest:load (arg[1]) then
 	error (("Module '%s' not found."):format (arg[1]))
 end
-
-local mod_manifest = require (manifest[arg[1]])
 
 io.write (([[
 Name: %s
@@ -19,11 +17,11 @@ Author: %s
 License: %s
 Description: %s
 ]]):format (
-	mod_manifest.name or "not-specified",
-	mod_manifest.version or "not-specified",
-	mod_manifest.author or "not-specified",
-	mod_manifest.license or "not-specified",
-	mod_manifest.description or "not-specified"
+	manifest:get_name () or "not-specified",
+	manifest:get_version () or "not-specified",
+	manifest:get_author () or "not-specified",
+	manifest:get_license () or "not-specified",
+	manifest:get_description () or "not-specified"
 ))
 
 return modinfo

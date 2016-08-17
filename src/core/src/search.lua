@@ -1,4 +1,6 @@
 require ("coroner.getopt")
+local lfs = require ("lfs")
+
 local search = {}
 
 local search_opt = ""
@@ -24,24 +26,31 @@ end
 
 local manifest = require ("manifest")
 
-for _, mod_manifest in pairs (manifest) do
-	local mod = require (mod_manifest)
-	local field = ""
+for file in lfs.dir (manifest:dir_path ()) do
+	file = manifest:dir_path () .. "/" .. file
 
-	for i = 1, #search_opt do
-		if search_opt:sub (i, i) == "n" then
-			field = mod.name
-		elseif search_opt:sub (i, i) == "d" then
-			field = mod.description
-		elseif search_opt:sub (i, i) == "a" then
-			field = mod.author
-		elseif search_opt:sub (i, i) == "l" then
-			field = mod.license
+	if lfs.attributes (file, "mode") == "file" then
+		if not manifest:loadfile (file) then
+			error (("Cannot load manifest file '%s'"):format (file))
 		end
 
-		if string.match (field:lower (), match_string:lower ()) then
-			io.write (("%s - %s\n"):format (mod.name, mod.description))
-			break
+		local field = ""
+
+		for i = 1, #search_opt do
+			if search_opt:sub (i, i) == "n" then
+				field = manifest:get_name ()
+			elseif search_opt:sub (i, i) == "d" then
+				field = manifest:get_description ()
+			elseif search_opt:sub (i, i) == "a" then
+				field = manifest:get_author ()
+			elseif search_opt:sub (i, i) == "l" then
+				field = manifest:get_license ()
+			end
+
+			if string.match (field:lower (), match_string:lower ()) then
+				io.write (("%s - %s\n"):format (manifest:get_name (), manifest:get_description ()))
+				break
+			end
 		end
 	end
 end
