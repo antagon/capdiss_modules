@@ -16,7 +16,8 @@ description = {
 
 dependencies = {
 	"lua >= 5.2",
-	"luafilesystem >= 1.6.0"
+	"luafilesystem >= 1.6.0",
+	"coroner >= 0.1"
 }
 
 build = {
