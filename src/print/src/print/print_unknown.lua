@@ -1,6 +1,6 @@
 require ("print/format")
 
-return function (bytes, ts, num)
+return function (packet, ts, num)
 	io.write (("%s %s %4s %s\n"):format (
 				format_pktnum (num),
 				format_timestamp (ts),
