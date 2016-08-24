@@ -25,8 +25,11 @@ local function is_file (filename)
 end
 
 function manifest:load (module)
+	-- Convert modname.submodule to path
+	module = module:gsub ("%.", "/")
+
 	if not is_file (self:dir_path () .. "/" .. module .. ".lua") then
-		self.errormsg = "no such file or directory"
+		self.errmsg = "no such file or directory"
 		return false
 	end
 
@@ -37,7 +40,7 @@ end
 
 function manifest:loadfile (file)
 	if not is_file (file) then
-		self.errormsg = "no such file or directory"
+		self.errmsg = "no such file or directory"
 		return false
 	end
 
