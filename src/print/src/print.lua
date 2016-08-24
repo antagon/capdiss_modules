@@ -22,8 +22,7 @@ local hooks = {
 	["ipv6"] = require ("print/print_ipv6"),
 	["icmp"] = require ("print/print_icmp"),
 	["tcp"] = require ("print/print_tcp"),
-	["udp"] = require ("print/print_udp"),
-	["http"] = require ("print/print_http")
+	["udp"] = require ("print/print_udp")
 }
 
 -- Show Ethernet header
