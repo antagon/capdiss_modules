@@ -1,5 +1,5 @@
-package = "capdiss-mods-meta"
--- The version should always copy the 'core' utils.
+package = "capdiss-mods-all"
+-- The version number should always copy the 'core' utils' version.
 version = "1.0-1"
 
 source = {
